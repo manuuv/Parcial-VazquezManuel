@@ -21,7 +21,8 @@ public class PersonaService {
         stats.setCount_mutant_dna(personaRepository.countByEsMutanteTrue());
         stats.setCount_human_dna(personaRepository.countByEsMutanteFalse());
         if(stats.getCount_human_dna() == 0){
-            stats.setRatio(stats.getCount_human_dna());
+            stats.setRatio(stats.getCount_mutant_dna());
+            return stats;
         }
         stats.setRatio((double) stats.getCount_mutant_dna() / stats.getCount_human_dna());
         return stats;

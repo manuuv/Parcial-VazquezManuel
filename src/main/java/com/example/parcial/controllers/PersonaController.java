@@ -43,5 +43,4 @@ public class PersonaController {
                     .body("{\"error\":\"Error interno del servidor. Por favor intente más tarde.\"}");
         }
     }
-
 }
