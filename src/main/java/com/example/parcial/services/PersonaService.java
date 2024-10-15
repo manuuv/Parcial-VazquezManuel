@@ -20,6 +20,9 @@ public class PersonaService {
         Stats stats = new Stats();
         stats.setCount_mutant_dna(personaRepository.countByEsMutanteTrue());
         stats.setCount_human_dna(personaRepository.countByEsMutanteFalse());
+        if(stats.getCount_human_dna() == 0){
+            stats.setRatio(stats.getCount_human_dna());
+        }
         stats.setRatio((double) stats.getCount_mutant_dna() / stats.getCount_human_dna());
         return stats;
     }
@@ -28,13 +31,16 @@ public class PersonaService {
     public Persona esMutante(Persona entity) throws Exception {
         try{
 
-            if(personaRepository.existsByDna(entity.getDna())){
+            Persona personaGuardada = personaRepository.findByDna(entity.getDna());
 
-                entity = personaRepository.findByDna(entity.getDna());
-                if(!entity.isEsMutante()){
+            if(personaGuardada != null){
+
+
+                if(!personaGuardada.isEsMutante()){
                     throw new Exception("El ADN proporcionado no es el de un mutante");
                 }
-                return entity;
+
+                return personaGuardada;
 
             }else{
 
@@ -65,14 +71,14 @@ public class PersonaService {
 
         int n = dna.length;
 
-        for (String row : dna) {
-            if (row.length() != n) {
+        for (String fila : dna) {
+            if (fila.length() != n) {
                 throw new Exception("Error. El ADN debe estar representado como matriz NXN.");
             }
         }
 
-        for (String row : dna) {
-            for (char c : row.toCharArray()) {
+        for (String fila : dna) {
+            for (char c : fila.toCharArray()) {
                 if (c != 'A' && c != 'T' && c != 'C' && c != 'G') {
                     throw new Exception("Error. El ADN proporcionado sólo debe contener las letras A, T, C, G.");
                 }

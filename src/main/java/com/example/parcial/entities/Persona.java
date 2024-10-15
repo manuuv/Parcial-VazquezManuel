@@ -1,10 +1,14 @@
 package com.example.parcial.entities;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.*;
+
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "persona")
